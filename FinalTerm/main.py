@@ -9,46 +9,44 @@ def main():
     root = tk.Tk()
 
     def driver_hill_climbing():
-        num_cities, seed = app.get_inputs()
+        num_cities, seed, max_iter = app.get_inputs() # Hứng thêm biến max_iter
         if num_cities is None: return
         try:
-            hc = HillClimbing(num_cities, seed=seed)
+            # Truyền số lượng vòng lặp vào class HillClimbing
+            hc = HillClimbing(num_cities, seed=seed, max_iterations=max_iter)
             best_route, _ = hc.solve()
 
-            # Truyen ca 2 chuoi text
             app.update_result_text(hc.result, hc.history_result)
             Visualization.draw_both(app.canvas, app.ax_route, app.ax_conv, hc.matrix, best_route, hc.convergence,
-                                    "Lộ trình: Hill Climbing", "Hội tụ: HC", "HC Thuần",
-                                    color='red')  # Đã đổi thành red
+                                    "Lộ trình: Hill Climbing", "Hội tụ: HC", "HC Thuần", color='red')
         except Exception as e:
             app.show_error(f"Lỗi chạy HC:\n{str(e)}")
 
     def driver_cso():
-        num_cities, seed = app.get_inputs()
+        num_cities, seed, max_iter = app.get_inputs() # Hứng thêm biến max_iter
         if num_cities is None: return
         try:
-            cso = CSO(num_cities, seed=seed)
+            # Truyền số lượng vòng lặp vào class CSO
+            cso = CSO(num_cities, seed=seed, max_iter=max_iter)
             best_route, _ = cso.solve()
 
-            # Truyen ca 2 chuoi text
             app.update_result_text(cso.result, cso.history_result)
             Visualization.draw_both(app.canvas, app.ax_route, app.ax_conv, cso.matrix, best_route, cso.convergence,
-                                    "Lộ trình: CSO Thuần", "Hội tụ: CSO", "CSO Thuần",
-                                    color='blue')  # Giữ màu blue cho CSO
+                                    "Lộ trình: CSO Thuần", "Hội tụ: CSO", "CSO Thuần", color='blue')
         except Exception as e:
             app.show_error(f"Lỗi chạy CSO:\n{str(e)}")
 
     def driver_compare():
-        num_cities, seed = app.get_inputs()
+        num_cities, seed, max_iter = app.get_inputs() # Hứng thêm biến max_iter
         if num_cities is None: return
         try:
-            result_data = Experiment.run_comparison_experiment(num_cities, seed)
+            # Truyền max_iter sang module điều phối thực nghiệm so sánh
+            result_data = Experiment.run_comparison_experiment(num_cities, seed, max_iter)
 
-            # Truyen ca 2 chuoi text
             app.update_result_text(result_data["report_text"], result_data["history_text"])
             combined_convergence = [result_data["hc_convergence"], result_data["cso_convergence"]]
             Visualization.draw_both(app.canvas, app.ax_route, app.ax_conv, result_data["matrix"], result_data["cso_route"], combined_convergence,
-                                    "Lộ trình Tốt nhất", "So sánh Tốc độ Hội tụ", ["HC Thuần", "CSO Thuần"])
+                                    "Lộ trình Tốt nhất (CSO)", "So sánh Tốc độ Hội tụ", ["HC Thuần", "CSO Thuần"])
         except Exception as e:
             app.show_error(f"Lỗi chạy So sánh:\n{str(e)}")
 

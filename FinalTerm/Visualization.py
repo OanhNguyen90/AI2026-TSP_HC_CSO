@@ -7,7 +7,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 def setup_canvas(parent_frame):
     """Khởi tạo không gian vẽ (1 hàng, 2 cột) nhúng vào Tkinter"""
     fig, (ax_route, ax_conv) = plt.subplots(1, 2, figsize=(10, 5))
-
+    ax_route.axis('off')
+    ax_conv.axis('off')
     canvas = FigureCanvasTkAgg(fig, master=parent_frame)
     canvas_widget = canvas.get_tk_widget()
     canvas_widget.pack(fill="both", expand=True)
@@ -18,7 +19,7 @@ def setup_canvas(parent_frame):
 def draw_both(canvas, ax_route, ax_conv, matrix, route, convergence, route_title, conv_title, conv_labels="Khoảng cách",
               color='blue'):
     """Hàm vẽ đồng thời cả Lộ trình (trái) và Biểu đồ hội tụ (phải)"""
-    # 1. VẼ LỘ TRÌNH (Bên trái) - Giữ nguyên
+    # 1. VẼ LỘ TRÌNH (Bên trái)
     ax_route.clear()
     if matrix is not None and route is not None:
         distance_arr = np.array(matrix)
@@ -31,10 +32,12 @@ def draw_both(canvas, ax_route, ax_conv, matrix, route, convergence, route_title
         nx.draw_networkx_edges(G, pos, ax=ax_route, alpha=0.2)
         nx.draw_networkx_edges(G, pos, ax=ax_route, edgelist=route_edges, edge_color="red", width=2.0)
         ax_route.set_title(route_title, fontsize=12, pad=10)
-        ax_route.axis("off")
+    ax_route.axis("off")
 
-    # 2. VẼ BIỂU ĐỒ HỘI TỤ (Bên phải)
     ax_conv.clear()
+
+    ax_route.axis("on")
+    # 2. VẼ BIỂU ĐỒ HỘI TỤ (Bên phải)
     if convergence:
         if isinstance(convergence[0], list):
             # Chế độ so sánh: HC màu đỏ, CSO màu xanh

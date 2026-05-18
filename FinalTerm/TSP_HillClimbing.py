@@ -95,7 +95,7 @@ class HillClimbing:
     def _format_output(self, initial_distance):
         self.result = f"=============== KẾT QUẢ HC ===============\n"
         self.result += f"Giải pháp ngẫu nhiên đầu: {self.initial_route}\n"
-        self.result += f"Q.đường ngẫu nhiên đầu  : {initial_distance}\n\n"
+        self.result += f"Q.đường ngẫu nhiên đầu  : {initial_distance}\n"
         self.result += f"Giải pháp tốt nhất      : {self.best_route}\n"
         self.result += f"Quãng đường ngắn nhất   : {self.best_distance}\n"
         self.result += f"Số vòng lặp thực hiện   : {self.iterations_used}\n"
