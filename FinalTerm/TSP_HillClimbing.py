@@ -22,9 +22,7 @@ class HillClimbing:
         self.result = ""
         self.history_result = ""
 
-    # ==========================================
     # CÁC HÀM NỘI BỘ (PRIVATE METHODS) CỦA HC
-    # ==========================================
     def _generate_neighbors(self, route):
         neighbors = []
         for i in range(len(route)):
@@ -45,9 +43,7 @@ class HillClimbing:
                 best_distance = current_distance
         return best_neighbor, best_distance
 
-    # ==========================================
     # HÀM CHẠY CHÍNH LÕI THUẬT TOÁN
-    # ==========================================
     def solve(self):
         if self.seed is not None:
             random.seed(self.seed)
